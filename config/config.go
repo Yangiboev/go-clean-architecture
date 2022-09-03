@@ -71,7 +71,6 @@ type RedisConfig struct {
 	DB             int
 }
 
-
 // Cookie config
 type Cookie struct {
 	Name     string
@@ -106,7 +105,6 @@ type AWS struct {
 	UseSSL         bool
 	MinioEndpoint  string
 }
-
 
 type Jaeger struct {
 	Host        string
