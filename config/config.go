@@ -13,7 +13,6 @@ type Config struct {
 	Server   ServerConfig
 	Postgres PostgresConfig
 	Redis    RedisConfig
-	MongoDB  MongoDB
 	Cookie   Cookie
 	Store    Store
 	Session  Session
@@ -72,10 +71,6 @@ type RedisConfig struct {
 	DB             int
 }
 
-// MongoDB config
-type MongoDB struct {
-	MongoURI string
-}
 
 // Cookie config
 type Cookie struct {
