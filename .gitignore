@@ -26,6 +26,9 @@ main
 .idea
 pgdata
 vendor
-
+ssl/*.crt
+ssl/*.csr
+ssl/*.key
+ssl/*.pem
 # Avatars storage directory
 avatars/

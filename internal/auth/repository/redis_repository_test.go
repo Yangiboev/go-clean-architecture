@@ -37,8 +37,8 @@ func TestAuthRedisRepo_GetByIDCtx(t *testing.T) {
 		userID := uuid.New()
 		u := &models.User{
 			UserID:    userID,
-			FirstName: "Alex",
-			LastName:  "Bryksin",
+			FirstName: "Dell",
+			LastName:  "Yangiboev",
 		}
 
 		err := authRedisRepo.SetUserCtx(context.Background(), key, 10, u)
@@ -61,8 +61,8 @@ func TestAuthRedisRepo_SetUserCtx(t *testing.T) {
 		userID := uuid.New()
 		u := &models.User{
 			UserID:    userID,
-			FirstName: "Alex",
-			LastName:  "Bryksin",
+			FirstName: "Dell",
+			LastName:  "Yangiboev",
 		}
 
 		err := authRedisRepo.SetUserCtx(context.Background(), key, 10, u)

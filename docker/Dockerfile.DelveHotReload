@@ -1,16 +1,38 @@
-FROM golang:1.16
+FROM golang:1.19-alpine AS builder
 
-RUN go get github.com/githubnemo/CompileDaemon && \
-  go get github.com/go-delve/delve/cmd/dlv
-WORKDIR /app
+# Set necessary environmet variables needed for our image
+ENV CGO_ENABLED=0
 
-ENV config=docker
+# Move to working directory /build
+WORKDIR /build
 
-COPY .. /app
-
+# Copy and download dependency using go mod
+COPY go.mod .
+COPY go.sum .
 RUN go mod download
 
+# Copy the code into the container
+COPY . .
 
-EXPOSE 5000 40000
+# Build the application
+# go build -o [name] [path to file]
+RUN go build -o app cmd/main.go
 
-ENTRYPOINT CompileDaemon --build="go build cmd/api/main.go" --command="dlv debug --headless --listen=:40000 --api-version=2 --accept-multiclient cmd/api/main.go"
+# Move to /dist directory as the place for resulting binary folder
+WORKDIR /dist
+
+# Copy binary from build to main folder
+RUN cp /build/app .
+
+############################
+# STEP 2 build a small image
+############################
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
+
+COPY . .
+COPY --from=builder /dist/app /
+# Copy the code into the container
+
+# Command to run the executable
+ENTRYPOINT ["/app"]

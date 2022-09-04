@@ -1,13 +1,13 @@
 server:
   AppVersion: 1.0.0
-  Port: :5000
+  Port: :5001
   PprofPort: :5555
   Mode: Development
   JwtSecretKey: secretkey
   CookieName: jwt-token
   ReadTimeout: 10
   WriteTimeout: 10
-  SSL: true
+  SSL: false
   CtxDefaultTimeout: 12
   CSRF: true
   Debug: false

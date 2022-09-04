@@ -31,12 +31,12 @@ func TestAuthRepo_Register(t *testing.T) {
 		role := "admin"
 
 		rows := sqlmock.NewRows([]string{"first_name", "last_name", "password", "email", "role", "gender"}).AddRow(
-			"Alex", "Bryksin", "123456", "alex@gmail.com", "admin", &gender)
+			"dell", "Yang", "123456", "dell@gmail.com", "admin", &gender)
 
 		user := &models.User{
-			FirstName: "Alex",
-			LastName:  "Bryksin",
-			Email:     "alex@gmail.com",
+			FirstName: "dell",
+			LastName:  "Yang",
+			Email:     "dell@gmail.com",
 			Password:  "123456",
 			Role:      &role,
 			Gender:    &gender,
@@ -70,13 +70,13 @@ func TestAuthRepo_GetByID(t *testing.T) {
 		uid := uuid.New()
 
 		rows := sqlmock.NewRows([]string{"user_id", "first_name", "last_name", "email"}).AddRow(
-			uid, "Alex", "Bryksin", "alex@mail.ru")
+			uid, "dell", "Yang", "dell@mail.ru")
 
 		testUser := &models.User{
 			UserID:    uid,
-			FirstName: "Alex",
-			LastName:  "Bryksin",
-			Email:     "alex@mail.ru",
+			FirstName: "dell",
+			LastName:  "Yang",
+			Email:     "dell@mail.ru",
 		}
 
 		mock.ExpectQuery(getUserQuery).
@@ -142,12 +142,12 @@ func TestAuthRepo_Update(t *testing.T) {
 		role := "admin"
 
 		rows := sqlmock.NewRows([]string{"first_name", "last_name", "password", "email", "role", "gender"}).AddRow(
-			"Alex", "Bryksin", "123456", "alex@gmail.com", "admin", &gender)
+			"dell", "Yang", "123456", "dell@gmail.com", "admin", &gender)
 
 		user := &models.User{
-			FirstName: "Alex",
-			LastName:  "Bryksin",
-			Email:     "alex@gmail.com",
+			FirstName: "dell",
+			LastName:  "Yang",
+			Email:     "dell@gmail.com",
 			Password:  "123456",
 			Role:      &role,
 			Gender:    &gender,
@@ -181,13 +181,13 @@ func TestAuthRepo_FindByEmail(t *testing.T) {
 		uid := uuid.New()
 
 		rows := sqlmock.NewRows([]string{"user_id", "first_name", "last_name", "email"}).AddRow(
-			uid, "Alex", "Bryksin", "alex@mail.ru")
+			uid, "dell", "Yang", "dell@mail.ru")
 
 		testUser := &models.User{
 			UserID:    uid,
-			FirstName: "Alex",
-			LastName:  "Bryksin",
-			Email:     "alex@mail.ru",
+			FirstName: "dell",
+			LastName:  "Yang",
+			Email:     "dell@mail.ru",
 		}
 
 		mock.ExpectQuery(findUserByEmail).WithArgs(testUser.Email).WillReturnRows(rows)
@@ -218,7 +218,7 @@ func TestAuthRepo_GetUsers(t *testing.T) {
 		totalCountRows := sqlmock.NewRows([]string{"count"}).AddRow(0)
 
 		rows := sqlmock.NewRows([]string{"user_id", "first_name", "last_name", "email"}).AddRow(
-			uid, "Alex", "Bryksin", "alex@mail.ru")
+			uid, "dell", "Yang", "dell@mail.ru")
 
 		mock.ExpectQuery(getTotal).WillReturnRows(totalCountRows)
 		mock.ExpectQuery(getUsers).WithArgs("", 0, 10).WillReturnRows(rows)
@@ -248,12 +248,12 @@ func TestAuthRepo_FindByName(t *testing.T) {
 
 	t.Run("FindByName", func(t *testing.T) {
 		uid := uuid.New()
-		userName := "Alex"
+		userName := "dell"
 
 		totalCountRows := sqlmock.NewRows([]string{"count"}).AddRow(0)
 
 		rows := sqlmock.NewRows([]string{"user_id", "first_name", "last_name", "email"}).AddRow(
-			uid, "Alex", "Bryksin", "alex@mail.ru")
+			uid, "dell", "Yang", "dell@mail.ru")
 
 		mock.ExpectQuery(getTotalCount).WillReturnRows(totalCountRows)
 		mock.ExpectQuery(findUsers).WithArgs("", 0, 10).WillReturnRows(rows)

@@ -1,31 +1,38 @@
-# Initial stage: download modules
-FROM golang:1.16-alpine as builder
+FROM golang:1.19-alpine AS builder
 
-ENV config=docker
+# Set necessary environmet variables needed for our image
+ENV CGO_ENABLED=0
 
-WORKDIR /app
+# Move to working directory /build
+WORKDIR /build
 
-COPY ./ /app
-
+# Copy and download dependency using go mod
+COPY go.mod .
+COPY go.sum .
 RUN go mod download
 
+# Copy the code into the container
+COPY . .
 
-# Intermediate stage: Build the binary
-FROM golang:1.16-alpine as runner
+# Build the application
+# go build -o [name] [path to file]
+RUN go build -o app cmd/main.go
 
-COPY --from=builder ./app ./app
+# Move to /dist directory as the place for resulting binary folder
+WORKDIR /dist
 
-RUN go get github.com/githubnemo/CompileDaemon
+# Copy binary from build to main folder
+RUN cp /build/app .
 
-WORKDIR /app
-ENV config=docker
+############################
+# STEP 2 build a small image
+############################
+FROM alpine:latest
+RUN apk --no-cache add ca-certificates
 
-EXPOSE 5000
-EXPOSE 5555
-EXPOSE 7070
+COPY . .
+COPY --from=builder /dist/app /
+# Copy the code into the container
 
-ENTRYPOINT CompileDaemon --build="go build cmd/api/main.go" --command=./main
-
-
-
-
+# Command to run the executable
+ENTRYPOINT ["/app"]
