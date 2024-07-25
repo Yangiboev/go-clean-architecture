@@ -11,10 +11,10 @@ import (
 )
 
 const (
-	maxOpenConns    = 60
-	connMaxLifetime = 120
-	maxIdleConns    = 30
-	connMaxIdleTime = 20
+	maxOpenConns    = 100
+	connMaxLifetime = 120 // 2 minutes
+	maxIdleConns    = 2
+	connMaxIdleTime = 10 // 10 seconds
 )
 
 // Return new Postgresql db instance
